@@ -1,5 +1,5 @@
 // Importo i dati dei cibi rustici
-const menuRusticFood = require('../data/posts');
+let menuRusticFood = require('../data/posts');
 
 //index
 function index(req, res) {
@@ -56,7 +56,13 @@ function modify(req, res) {
 // destroy
 
 function destroy(req, res) {
-    res.send('Eliminazione del cibo rustico ' + req.params.id);
+    //res.send('Eliminazione del cibo rustico ' + req.params.id);
+     menuRusticFood= menuRusticFood.filter(food =>food.id!=req.params.id)
+
+console.log(menuRusticFood)
+res.sendStatus(204)
+
+
 }
 
 
