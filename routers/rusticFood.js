@@ -1,48 +1,30 @@
 // richiamo istanza di framework Express
-const express = require('express')
+const express = require('express');
 // creiamo un istanza dell'oggetto rotte di Express
 const router = express.Router();
 
-// importo i dati dei cibi rustici
-const menuRusticFood = require('../data/posts');
+// Importo crontroller dei cibi rustici
+const rusticFoodController = require('../controllers/rusticFoodController');
 
 // Rotte di CRUD
 // index
-router.get('/', function (req, res) {
-    //res.send('Lista dei cibi rustici');
+router.get('/',rusticFoodController.index);
     
-    // Restituisco dati in json
-    res.json(menuRusticFood)
-        
-});
-
+ 
 // show
-router.get('/:id', function (req, res) {
-    //res.send('Dettagli dei cibi rustici ' + req.params.id);
-    // show per restituire ogni singola ricetta
-    const prodotto = menuRusticFood.find(food => food.id == req.params.id)
-    res.json(prodotto)
-});
+router.get('/:id', rusticFoodController.show);
 
 // store
-router.post('/', function (req, res) {
-    res.send('Creazione nuovo cibo rustico');
-});
+router.post('/', rusticFoodController.store);
 
 // update
-router.put('/:id', function (req, res) {
-    res.send('Modifica integrale dei cibi rustici ' + req.params.id);
-});
+router.put('/:id', rusticFoodController.update);
 
 // modify
-router.patch('/:id', function (req, res) {
-    res.send('Modifica parziale dei cibi rustici ' + req.params.id);
-});
+router.patch('/:id', rusticFoodController.modify );
 
 // destroy
-router.delete('/:id', function (req, res) {
-    res.send('Eliminazione del cibo rustico ' + req.params.id);
-});
+router.delete('/:id', rusticFoodController.destroy );
 
 // Esporto l'istanza delle rotte
 module.exports = router;
