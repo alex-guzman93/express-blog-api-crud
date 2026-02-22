@@ -74,34 +74,43 @@ function modify(req, res) {
 
 function destroy(req, res) {
     //res.send('Eliminazione del cibo rustico ' + req.params.id);
-    // logica con variabile let
-    //menuRusticFood= menuRusticFood.filter(food =>food.id!=req.params.id)
-    //cerco il prodotto tramite id
-    const prodotto = menuRusticFood.find(food => food.id == req.params.id);
-    if (!prodotto) {
-        res.status(404);
 
-        return res.json({
+    // primo metod logica con variabile let
+    //menuRusticFood= menuRusticFood.filter(food =>food.id!=req.params.id)
+
+    //cerco il prodotto tramite id, non e sicuro usare questo secondo metod, puo provocare bug futuri
+    //const prodotto = menuRusticFood.find(food => food.id == req.params.id);
+
+    // terzo metod Converto l'id da stringa a numero per confronto sicuro
+    const id = parseInt(req.params.id);
+
+    // Cerco l'indice del prodotto nell'array
+    const index = menuRusticFood.findIndex(food => food.id === id);
+
+    // Se il prodotto non esiste risponde 404 + oggetto di errore
+    if (index === -1) {
+        return res.status(404).json({
             status: 404,
             error: "Not Found",
-            message: "prodotto non esistente"
-            //console.log(prodotto)
-
-
-        })
+            message: "Prodotto non esistente"
+        });
     }
 
     // Rimuovo il cibo rustico dalla lista
-    // Elimino il primo elemento a partire dall'indice
-    menuRusticFood.splice(menuRusticFood.indexOf(prodotto), 1);
+    // menuRusticFood.splice(menuRusticFood.indexOf(prodotto), 1);
+
+    // Rimuovo il prodotto dalla lista
+    menuRusticFood.splice(index, 1);
 
 
-    //forzo status no content
-    res.sendStatus(204)
+    //forzo status , operazione non riuscita no content
+    //res.sendStatus(204)
 
+    // Rispondo con 204: operazione riuscita, nessun contenuto
+    return res.sendStatus(204);
 
+    //console.log(prodotto)
 }
-
 
 //Esporto le funzioni del controller per usarle in router
 module.exports = { index, show, store, update, modify, destroy }
