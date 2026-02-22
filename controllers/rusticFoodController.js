@@ -18,10 +18,9 @@ function index(req, res) {
     }
 
     // creo un nuovo oggetto con le prop che mi servono
-    res.json = ({
+    res.json({
         total: filteredRusticFood.length,
         data: filteredRusticFood
-
 
         // Restituisco dati in json base
         //res.json(menuRusticFood);
@@ -86,7 +85,7 @@ function destroy(req, res) {
             status: 404,
             error: "Not Found",
             message: "prodotto non esistente"
-//console.log(prodotto)
+            //console.log(prodotto)
 
 
         })
@@ -94,7 +93,7 @@ function destroy(req, res) {
 
     // Rimuovo il cibo rustico dalla lista
     // Elimino il primo elemento a partire dall'indice
-    recipesList.splice(recipesList.indexOf(ricetta), 1);
+    menuRusticFood.splice(menuRusticFood.indexOf(prodotto), 1);
 
 
     //forzo status no content

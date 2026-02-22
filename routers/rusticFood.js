@@ -10,7 +10,6 @@ const rusticFoodController = require('../controllers/rusticFoodController');
 // index
 router.get('/',rusticFoodController.index);
     
- 
 // show
 router.get('/:id', rusticFoodController.show);
 
