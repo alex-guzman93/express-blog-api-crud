@@ -13,8 +13,8 @@ function index(req, res) {
     if (req.query.tags) {
         filteredRusticFood = menuRusticFood.filter(
             // uso tolowercase per evitare problemi,trasforma tutto in minuscolo.
-            food => food.tags.toLowerCase().includes(req.query.tags.toLowerCase())
-        );
+            food => food.tags.some(tag => tag.toLowerCase().includes(req.query.tags.toLowerCase()))
+            );
     }
 
     // creo un nuovo oggetto con le prop che mi servono
@@ -56,6 +56,7 @@ function show(req, res) {
 
 function store(req, res) {
     res.send('Creazione nuovo cibo rustico');
+
 }
 
 // update
