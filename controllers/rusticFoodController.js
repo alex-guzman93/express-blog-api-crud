@@ -55,7 +55,12 @@ function show(req, res) {
 // store
 
 function store(req, res) {
-    res.send('Creazione nuovo cibo rustico');
+    //res.send('Creazione nuovo cibo rustico');
+    //stampa di controllo
+console.log("Body ricevuto:", req.body);
+
+
+
 
 }
 
