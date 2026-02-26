@@ -1,12 +1,12 @@
 // Importo i dati dei cibi rustici
-//let menuRusticFood = require('../data/posts');
+// let menuRusticFood = require('../data/posts');
 const menuRusticFood = require('../data/posts');
 
 //index
 function index(req, res) {
-    //res.send('Lista dei cibi rustici');
+    // res.send('Lista dei cibi rustici');
 
-    //Inizialmente, il menu dei cibi rustici filtrato corrisponde a quello originale
+    // Inizialmente, il menu dei cibi rustici filtrato corrisponde a quello originale
     let filteredRusticFood = menuRusticFood;
 
     // Filtro il menu dei cibi rustici che contengono un determinato tag 
@@ -57,21 +57,21 @@ function show(req, res) {
 function store(req, res) {
     //res.send('Creazione nuovo cibo rustico');
 
-    //stampa di controllo per verificare cosa arriva dal client (postman/browser)
+    // stampa di controllo per verificare cosa arriva dal client (postman/browser)
     console.log("Body ricevuto:", req.body);
 
     // genero un id unico 
     const newId = Date.now();
 
-    //creo un nuovo oggetto usando i dati inviati dal client
+    // creo un nuovo oggetto usando i dati inviati dal client
     const newFood = {
         id: newId,
         name: req.body.name,
         image: req.body.image,
-        ingredients: req.body.ingredients
+        tags: req.body.tags
     };
 
-    //aggiungo il nuovo oggetto  all'array
+    // aggiungo il nuovo oggetto  all'array
     menuRusticFood.push(newFood);
 
     //controllo nel terminale l'array aggiornato
@@ -85,7 +85,35 @@ function store(req, res) {
 // update
 
 function update(req, res) {
-    res.send('Modifica integrale dei cibi rustici ' + req.params.id);
+    //res.send('Modifica integrale dei cibi rustici ' + req.params.id);
+
+    //Converto l'id da stringa a numero 
+  const id = parseInt(req.params.id);
+
+    //  Cerchiamo l'elemento tramite id
+    const prodotto = menuRusticFood.find(item => item.id === id);
+
+    //  Se non esiste 
+    if (!prodotto) {
+        return res.status(404).json({
+            error: "Not Found",
+            message: "elemento non trovato"
+        });
+    }
+
+    // Modifica completa (sovrascriviamo i campi)
+    food.name = req.body.name;
+    food.image = req.body.image;
+    food.tags = req.body.tags;
+
+    // Controllo nel terminale
+    console.log("Elemento aggiornato:", prodotto);
+
+    // Restituiamo l'oggetto aggiornato
+    res.json(prodotto);
+
+
+
 }
 
 // modify
@@ -127,7 +155,7 @@ function destroy(req, res) {
     menuRusticFood.splice(index, 1);
 
     //stampa di controllo nel terminale 
-      console.log("array dopo la eliminazione:", menuRusticFood)
+      console.log("array dopo la eliminazione:", menuRusticFood);
 
     //forzo status , operazione riuscita , nessun contenuto
     //res.sendStatus(204)
