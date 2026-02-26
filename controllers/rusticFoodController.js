@@ -14,7 +14,7 @@ function index(req, res) {
         filteredRusticFood = menuRusticFood.filter(
             // uso tolowercase per evitare problemi,trasforma tutto in minuscolo.
             food => food.tags.some(tag => tag.toLowerCase().includes(req.query.tags.toLowerCase()))
-            );
+        );
     }
 
     // creo un nuovo oggetto con le prop che mi servono
@@ -56,13 +56,31 @@ function show(req, res) {
 
 function store(req, res) {
     //res.send('Creazione nuovo cibo rustico');
-    //stampa di controllo
-console.log("Body ricevuto:", req.body);
 
+    //stampa di controllo per verificare cosa arriva dal client (postman/browser)
+    console.log("Body ricevuto:", req.body);
 
+    // genero un id unico 
+    const newId = Date.now();
 
+    //creo un nuovo oggetto usando i dati inviati dal client
+    const newFood = {
+        id: newId,
+        name: req.body.name,
+        image: req.body.image,
+        ingredients: req.body.ingredients
+    };
 
+    //aggiungo il nuovo oggetto  all'array
+    menuRusticFood.push(newFood);
+
+    //controllo nel terminale l'array aggiornato
+    console.log("Menu aggiornato:", menuRusticFood);
+
+    // restituisco lo status 201 e il nuovo oggetto creato
+    res.status(201).json(newFood);
 }
+
 
 // update
 
@@ -108,15 +126,18 @@ function destroy(req, res) {
     // Rimuovo il prodotto dalla lista
     menuRusticFood.splice(index, 1);
 
+    //stampa di controllo nel terminale 
+      console.log("array dopo la eliminazione:", menuRusticFood)
 
-    //forzo status , operazione non riuscita no content
+    //forzo status , operazione riuscita , nessun contenuto
     //res.sendStatus(204)
 
     // Rispondo con 204: operazione riuscita, nessun contenuto
     return res.sendStatus(204);
 
-    //console.log(prodotto)
+    
 }
+
 
 //Esporto le funzioni del controller per usarle in router
 module.exports = { index, show, store, update, modify, destroy }
