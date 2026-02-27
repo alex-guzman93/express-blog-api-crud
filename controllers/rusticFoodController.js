@@ -182,4 +182,4 @@ function destroy(req, res) {
 
 
 //Esporto le funzioni del controller per usarle in router
-module.exports = { index, show, store, update, modify, destroy }
+module.exports = { index, show, store, update, modify, destroy };
